@@ -2,6 +2,8 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 import './login.css';
+import Reg from '../Registrering/Registrering.js';
+import Popup from '../Registrering/Popup.js';
 
 class Login extends React.Component {
     constructor(props) {
@@ -34,7 +36,7 @@ class Login extends React.Component {
 
       const that = this;
 
-      fetch('http://localhost:3000/api/inlogg', {
+      fetch('http://localhost:3003/api/inlogg', {
           body: '{ "userName": "' + this.state.username + '", "passWord": "' + this.state.password + '"}',
           headers: {
             'Content-Type': 'application/json'
@@ -45,7 +47,7 @@ class Login extends React.Component {
         }).then(function (result) {
           if (!result.error) {
             that.setState({ loggedIn: true })
-          }
+          } else {alert('Fel lösenord')};
         })
 
       localStorage.setItem("username", this.state.value);
@@ -55,7 +57,7 @@ class Login extends React.Component {
     render() {
       if (this.state.loggedIn) {
         return <Redirect to="/gruppchatt" />
-      }
+      } 
 
       return (
         <div className="container">
@@ -71,7 +73,7 @@ class Login extends React.Component {
               <button type="submit" value="Submit" id="submit">Go!</button>
               <p className="inlogg-p">Inget konto? Klicka </p>
               </form>
-            {/* <Reg /> */}
+             <Reg />
           </div>
         </div>      
       );

@@ -29,6 +29,14 @@ div.container {
     height:360px;
 }
 
+.main h2 {
+    font-size:1.4em;
+}
+
+.main form {
+    margin-top:20px;
+}
+
 input[type=text],
 input[type=email] {
     width: 95%;
@@ -53,7 +61,8 @@ label {
 .inlogg-p {
     color: white;
     text-align: center;
-    margin-left:-25px;
+    margin-top:25px;
+    font-size:1.2em;
 }
 
 h2 {
@@ -165,11 +174,9 @@ button:hover {
   }
 
   #first-reg-button {
-    width:28%;
+    width:20%;
     float:right;
-    margin-top:-40px;
-    margin-left:-30px;
-    height:30px;
+    margin-top:-25px;
     line-height:10px;
     font-size:1.2em;
     font-weight:100;
@@ -179,8 +186,4 @@ button:hover {
 
   #reg-username, #reg-password {
       width:98%;
-  }
-
-  .user-name-reg {
-      
   }

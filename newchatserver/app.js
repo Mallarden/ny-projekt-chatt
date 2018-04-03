@@ -149,6 +149,6 @@ app.get('/api/privatchatt', function (request, response) {
   });
 
 
-app.listen(3000, function () {
+app.listen(3003, function () {
   console.log('The server is running.')
 });
