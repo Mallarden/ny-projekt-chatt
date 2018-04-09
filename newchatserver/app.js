@@ -6,9 +6,15 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 var db;
 var app = express();
-var cors = require('cors');
+// var cors = require('cors');
 
-app.use(cors());
+// app.use(cors());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.use(bodyParser.json());
 
@@ -40,7 +46,40 @@ MongoClient.connect('mongodb://localhost:27017', function(error, client) {
 //     }
 //   })
 // })
+ /*-------------------------------register---------------------------------*/
 
+app.post('/api/inlogg', function (request, response) {
+  db.collection('users').insert(request.body,
+    function (result, error) {
+      if (error) {
+        response.status(500).send(error);
+        return;
+      } else if (result.length == 0) {
+        db.collection('users').insert(request.body,
+        function (error, result) {
+          if (error) {
+            response.status(500).send(error);
+            return;
+          } else {
+            response.send(result);
+          }
+        });
+      } else if (result.length >= 1) {
+        response.status(409).send();
+      }
+    })
+  });
+
+app.get('/api/register', function (request, response) {
+  db.collection('users').find({}).toArray(function (error, result) {
+    if (error) {
+      response.status(500).send(error);
+      return;
+    } else {
+      response.send(result);
+    }
+  })
+});
 /*-------------------------------inlogg---------------------------------*/
 
 app.post('/api/inlogg', function (request, response) {
@@ -148,7 +187,7 @@ app.get('/api/privatchatt', function (request, response) {
     });
   });
 
-
+// Ny
 app.listen(3003, function () {
   console.log('The server is running.')
 });
