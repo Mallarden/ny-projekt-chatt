@@ -1,4 +1,6 @@
+import React from 'react';
 
+import './privatchatt.css';
 
 
 // komponent för att lägga till meddelande i databasen som användaren skriver i inputfältet.
@@ -19,8 +21,8 @@ class ChattMsg extends React.Component {
     return <div className="chatt-input">
       <input className="input-field" placeholder="Börja Chatta" onChange={this.onTextChange}></input>
       <button className="send-btn" onClick={() => {
-        fetch('/api/privatchatt', {
-          body: '{ "privateSender": "' + localStorage.getItem("username") + '", "receiver": "' + this.state.choosenOne + '", "privateText": "' + this.state.inputMessage + '" }',
+        fetch('http://localhost:3003/api/privatchatt', {
+          body: '{ "privateSender": "' + sessionStorage.getItem("username") + '", "receiver": "' + this.state.choosenOne + '", "privateText": "' + this.state.inputMessage + '" }',
           headers: {
             'Content-Type': 'application/json'
           },
@@ -49,7 +51,7 @@ componentDidMount() {
 setInterval(function () {
 
 
-  fetch('/api/privatchatt').then(function (response) {
+  fetch('http://localhost:3003/api/privatchatt').then(function (response) {
   return response.json();
 }).then(function (result) {
     this.setState({
@@ -76,7 +78,7 @@ class UsersList extends React.Component {
   }
 
   componentDidMount() {
-      fetch('/api/inlogg').then(function (response) {
+      fetch('http://localhost:3003/api/inlogg').then(function (response) {
         return response.json();
       }).then(function (result) {
         this.setState({
@@ -102,7 +104,9 @@ var h1Styles = {
   fontFamily: 'Raleway',
   paddingBottom: 0.3 + 'em'
 };
-ReactDOM.render(<div>
+class Privatchatt extends React.Component {
+  render() {
+    return <div>
     <div className="user-list-wrapper">
       <ul>
         <UsersList></UsersList>
@@ -115,6 +119,8 @@ ReactDOM.render(<div>
       </div>
       <ChattMsg></ChattMsg>
     </div>
-  </div>,
-  document.getElementById('app')
- );
+  </div>
+  }
+}
+
+export default Privatchatt;

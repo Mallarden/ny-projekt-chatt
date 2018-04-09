@@ -50,7 +50,7 @@ class Login extends React.Component {
           } else {alert('Fel lösenord')};
         })
 
-      localStorage.setItem("username", this.state.username);
+      sessionStorage.setItem("username", this.state.username);
 
     }
 

@@ -21,7 +21,7 @@ class ChattMsg extends React.Component {
         <input className="input-field" placeholder="Börja Chatta" onChange={this.onTextChange}></input>
         <button className="send-btn" onClick={() => {
           fetch('http://localhost:3003/api/gruppchatt', {
-            body: '{ "publicSender": "' + localStorage.getItem("username") + '", "publicText": "' + this.state.inputMessage + '" }',
+            body: '{ "publicSender": "' + sessionStorage.getItem("username") + '", "publicText": "' + this.state.inputMessage + '" }',
             headers: {
               'Content-Type': 'application/json'
             },
@@ -71,11 +71,13 @@ class ChattMsg extends React.Component {
     constructor(props) {
       super();
       this.state = {
-        usersData: []
+        usersData: [],
+        choosenOne: []
       };
     }
 
     componentDidMount() {
+      setInterval(function () {
         fetch('http://localhost:3003/api/inlogg').then(function (response) {
           return response.json();
         }).then(function (result) {
@@ -83,13 +85,18 @@ class ChattMsg extends React.Component {
             usersData: result
           });
 
-        }.bind(this))
+          }.bind(this))
+        }.bind(this), 1000)
       }
+
 
       render () {
         return this.state.usersData.map(function (user) {
-                    return <li key={user._id}>{user.userName}</li>;
-                  }
+                    return (<div className="dropdown">
+                      <li key={user._id}>{user.userName}</li>
+                      <div className="dropdown-content"><p /*onClick={this.setState({ choosenOne: user.userName})}*/>Starta privatchatt med {user.userName}</p></div>
+                    </div>);
+                  }.bind(this)
                 )
               }
   }

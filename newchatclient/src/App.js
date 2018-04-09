@@ -8,6 +8,7 @@ import {
 import Login from './components/Login/Login';
 import Gruppchatt from './components/Gruppchatt/Gruppchatt';
 import Registrering from './components/Registrering/Registrering';
+import Privatchatt from './components/Privatchatt/Privatchatt';
 
 class App extends React.Component {
   render() {
@@ -17,6 +18,7 @@ class App extends React.Component {
         <Route exact path="/" component={Login} />
         <Route path="/gruppchatt" component={Gruppchatt} />
         <Route path="/registrering" component={Registrering} />
+        <Route path="/privatchatt" component={Privatchatt} />
         </div>
       </BrowserRouter>
     )
