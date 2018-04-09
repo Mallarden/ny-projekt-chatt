@@ -48,15 +48,16 @@ MongoClient.connect('mongodb://localhost:27017', function(error, client) {
 // })
  /*-------------------------------register---------------------------------*/
 
-app.post('/api/inlogg', function (request, response) {
-  db.collection('users').insert(request.body,
-    function (result, error) {
-      if (error) {
-        response.status(500).send(error);
-        return;
-      } else if (result.length == 0) {
-        db.collection('users').insert(request.body,
-        function (error, result) {
+ app.post('/api/register', function(request, response) {
+  db.collection('users').find({
+    "userName": request.body.userName
+  }).toArray(function(error, result) {
+    if (error) {
+      response.status(500).send(error);
+      return;
+    } else if (result.length == 0) {
+      db.collection('users').insert(request.body,
+        function(error, result) {
           if (error) {
             response.status(500).send(error);
             return;
@@ -64,14 +65,14 @@ app.post('/api/inlogg', function (request, response) {
             response.send(result);
           }
         });
-      } else if (result.length >= 1) {
-        response.status(409).send();
-      }
-    })
-  });
+    } else if (result.length >= 1) {
+      response.status(409).send();
+    }
+  })
+});
 
-app.get('/api/register', function (request, response) {
-  db.collection('users').find({}).toArray(function (error, result) {
+app.get('/api/register', function(request, response) {
+  db.collection('users').find({}).toArray(function(error, result) {
     if (error) {
       response.status(500).send(error);
       return;
