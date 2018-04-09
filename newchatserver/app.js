@@ -136,7 +136,7 @@ app.get('/api/inlogg', function (request, response) {
 /*---------------------gruppchatten----------------------------------*/
 // lägger till data i databasen för gruppchatten
 app.post('/api/gruppchatt', function (request, response) {
-  db.collection('messages').update(request.body, { $set: { "time": new Date() } }, { upsert: true },
+  db.collection('messages').insert(request.body,
   function (error, result) {
     if (error) {
       response.status(500).send(error);
@@ -163,7 +163,7 @@ app.get('/api/gruppchatt', function (request, response) {
 
 /*--------------------------privatchatten---------------------------------*/
 app.post('/api/privatchatt', function (request, response) {
-  db.collection('privmessages').update(request.body, { $set: { "time": new Date() } }, { upsert: true },
+  db.collection('privmessages').insert(request.body,
     function (error, result) {
       if (error) {
         response.status(500).send(error);

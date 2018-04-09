@@ -50,14 +50,14 @@ class Login extends React.Component {
           } else {alert('Fel lösenord')};
         })
 
-      localStorage.setItem("username", this.state.value);
+      localStorage.setItem("username", this.state.username);
 
     }
 
     render() {
       if (this.state.loggedIn) {
         return <Redirect to="/gruppchatt" />
-      } 
+      }
 
       return (
         <div className="container">
@@ -75,7 +75,7 @@ class Login extends React.Component {
               </form>
              <Reg />
           </div>
-        </div>      
+        </div>
       );
     }
   };
