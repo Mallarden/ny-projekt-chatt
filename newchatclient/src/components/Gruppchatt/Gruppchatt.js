@@ -1,9 +1,14 @@
 
 import React from 'react';
-
+import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './gruppchatt.css';
 
 // komponent för att lägga till meddelande i databasen som användaren skriver i inputfältet.
+
+
+
+
 class ChattMsg extends React.Component {
     constructor(props) {
       super();
@@ -16,7 +21,7 @@ class ChattMsg extends React.Component {
       this.setState({ inputMessage: event.target.value });
     }
 
-    render() { console.log(localStorage.getItem("username"));
+    render() { console.log(sessionStorage.getItem("username"));
       return <div className="chatt-input">
         <input className="input-field" placeholder="Börja Chatta" onChange={this.onTextChange}></input>
         <button className="send-btn" onClick={() => {
@@ -71,13 +76,11 @@ class ChattMsg extends React.Component {
     constructor(props) {
       super();
       this.state = {
-        usersData: [],
-        choosenOne: []
+        usersData: []
       };
     }
 
     componentDidMount() {
-      setInterval(function () {
         fetch('http://localhost:3003/api/inlogg').then(function (response) {
           return response.json();
         }).then(function (result) {
@@ -86,17 +89,16 @@ class ChattMsg extends React.Component {
           });
 
           }.bind(this))
-        }.bind(this), 1000)
       }
 
 
       render () {
         return this.state.usersData.map(function (user) {
-                    return (<div className="dropdown">
+                    return <div className="dropdown">
                       <li key={user._id}>{user.userName}</li>
-                      <div className="dropdown-content"><p /*onClick={this.setState({ choosenOne: user.userName})}*/>Starta privatchatt med {user.userName}</p></div>
-                    </div>);
-                  }.bind(this)
+                      <div className="dropdown-content"><Link to={"/privatchatt/"+user.userName} target="_blank"><p>Starta privatchatt med {user.userName}</p></Link></div>
+                    </div>;
+                  }
                 )
               }
   }
@@ -120,15 +122,24 @@ class ChattMsg extends React.Component {
 
   */
 
-
+  var pStyles = {
+    color: 'white',
+    fontSize: 0.8 + 'em',
+    fontFamily: 'Raleway',
+    paddingBottom: 0.3 + 'em'
+  };
 class Gruppchatt extends React.Component {
   render() {
+    if (sessionStorage.getItem("username") === null) {
+      return <Redirect to="/" />
+    }
     return <div>
     <div className="user-list-wrapper">
       <ul>
         <UsersList></UsersList>
       </ul>
     </div>
+    <h4 style={pStyles}>Inloggad som {sessionStorage.getItem("username")}</h4>
     <div className="chattwrapper">
       <div className="chattbox">
       <MsgOutput></MsgOutput>
