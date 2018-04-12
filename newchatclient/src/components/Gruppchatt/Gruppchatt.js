@@ -6,9 +6,6 @@ import './gruppchatt.css';
 
 // komponent för att lägga till meddelande i databasen som användaren skriver i inputfältet.
 
-
-
-
 class ChattMsg extends React.Component {
     constructor(props) {
       super();
@@ -21,25 +18,35 @@ class ChattMsg extends React.Component {
       this.setState({ inputMessage: event.target.value });
     }
 
+    handleChange(e) {
+      if (e.key == 'Enter') {
+         this.chattFunc();
+      }
+    };
+
+    chattFunc() {
+      fetch('http://localhost:3003/api/gruppchatt', {
+        body: '{ "publicSender": "' + sessionStorage.getItem("username") + '", "publicText": "' + this.state.inputMessage + '" }',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST'
+      }).then(function (response) {
+        return response.json();
+      }).then(function (result) {
+        console.log(result);
+      });
+    }
+    
     render() { console.log(sessionStorage.getItem("username"));
       return <div className="chatt-input">
-        <input className="input-field" placeholder="Börja Chatta" onChange={this.onTextChange}></input>
-        <button className="send-btn" onClick={() => {
-          fetch('http://localhost:3003/api/gruppchatt', {
-            body: '{ "publicSender": "' + sessionStorage.getItem("username") + '", "publicText": "' + this.state.inputMessage + '" }',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            method: 'POST'
-          }).then(function (response) {
-            return response.json();
-          }).then(function (result) {
-            console.log(result);
-          });
-        }}>Send</button>
+        <input className="input-field" ref="input" placeholder="Börja Chatta" onKeyPress={this.handleChange.bind(this)} onChange={this.onTextChange}></input>
+        <button className="send-btn" onClick={this.chattFunc}
+        >Send</button>
         </div>
     }
   };
+ 
 
   // komponent för att hämta databas collection "users" och sedan skriva ut det i chattbox diven.
   class MsgOutput extends React.Component {
@@ -48,12 +55,10 @@ class ChattMsg extends React.Component {
       this.state = {
         data: []
       };
-
     }
 
   componentDidMount() {
   setInterval(function () {
-
     fetch('http://localhost:3003/api/gruppchatt').then(function (response) {
     return response.json();
   }).then(function (result) {
@@ -71,13 +76,17 @@ class ChattMsg extends React.Component {
       )
     }
   };
-
   class UsersList extends React.Component {
     constructor(props) {
       super();
       this.state = {
         usersData: []
       };
+      window.setInterval(function() {
+        var elem = document.getElementsByClassName('chattbox');
+          console.log(elem);
+        elem[0].scrollTop = elem[0].scrollHeight;
+      }, 500);
     }
 
     componentDidMount() {
@@ -101,7 +110,8 @@ class ChattMsg extends React.Component {
                   }
                 )
               }
-  }
+            }
+
 
 
   /* var Sidebar = createReactClass({
@@ -149,5 +159,7 @@ class Gruppchatt extends React.Component {
      </div>
   }
 }
+
+ 
 
 export default Gruppchatt;

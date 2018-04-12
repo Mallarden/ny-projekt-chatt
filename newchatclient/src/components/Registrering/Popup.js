@@ -33,7 +33,8 @@ class Popup extends React.Component {
           if (response.status == 409) {
             alert('Användarnamn upptaget!');
           } else if (response.status == 200) {
-            this.props.closePopup();
+            this.props.closePopup(),
+            alert('Registrering slutförd');
           };
           return response.json();
         }.bind(this));    

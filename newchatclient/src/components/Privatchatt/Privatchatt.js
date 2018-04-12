@@ -166,11 +166,7 @@ msgOutput() {
     }
     return (
     <div>
-    <div className="user-list-wrapper">
-      <ul>
-        <UsersList></UsersList>
-      </ul>
-    </div>
+  
     <h4 style={pStyles}>Inloggad som {sessionStorage.getItem("username")}</h4>
     <div className="chattwrapper">
       <h1 style={h1Styles}>Privatchatt med {this.props.match.params.id}</h1>
