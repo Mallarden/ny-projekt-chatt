@@ -126,7 +126,7 @@ class Privatchatt extends React.Component {
   }
 
 chattMsg() {
-      fetch('http://localhost:3003/api/privatchatt', {
+      fetch('/privmsg', {
         body: '{ "privateSender": "' + sessionStorage.getItem("username") + '", "receiver": "' + this.props.match.params.id + '", "privateText": "' + this.state.inputMessage + '" }',
         headers: {
           'Content-Type': 'application/json'
@@ -141,7 +141,7 @@ chattMsg() {
 //-----------------------------------------------------------------------------
     componentDidMount() {
     setInterval(function () {
-      fetch('http://localhost:3003/api/privatchatt').then(function (response) {
+      fetch('/privmsg/:user1/:user2').then(function (response) {
       return response.json();
     }).then(function (result) {
         this.setState({
@@ -152,9 +152,8 @@ chattMsg() {
     }
 
 msgOutput() {
-  return this.state.data.map(function (msg) { if (msg.privateSender == sessionStorage.getItem("username") && msg.receiver == this.props.match.params.id) {
+  return this.state.data.map(function (msg) {
     return <p className="p-chatt-styling" key={msg._id}>{msg.privateSender}: {msg.privateText}</p>;
-        }
       }.bind(this)
     )
 }
