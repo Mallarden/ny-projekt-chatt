@@ -116,7 +116,8 @@ class Privatchatt extends React.Component {
     super();
     this.state = {
       inputMessage: null,
-      data: []
+      data: [],
+      data2: []
     };
     this.onTextChange = this.onTextChange.bind(this);
     this.chattMsg = this.chattMsg.bind(this);
@@ -126,8 +127,8 @@ class Privatchatt extends React.Component {
   }
 
 chattMsg() {
-      fetch('http://localhost:3003/api/privatchatt', {
-        body: '{ "privateSender": "' + sessionStorage.getItem("username") + '", "receiver": "' + this.props.match.params.id + '", "privateText": "' + this.state.inputMessage + '" }',
+      fetch('http://localhost:3003/privmsg/', {
+        body: '{ "privateSender": "' + sessionStorage.getItem("username") + '", "receiver": "' + this.props.match.params.id2 + '", "privateText": "' + this.state.inputMessage + '" }',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -141,7 +142,7 @@ chattMsg() {
 //-----------------------------------------------------------------------------
     componentDidMount() {
     setInterval(function () {
-      fetch('http://localhost:3003/api/privatchatt').then(function (response) {
+      fetch('http://localhost:3003/privmsg/'+this.props.match.params.id2+'/'+sessionStorage.getItem("username")).then(function (response) {
       return response.json();
     }).then(function (result) {
         this.setState({
@@ -149,12 +150,26 @@ chattMsg() {
         });
       }.bind(this))
     }.bind(this), 1000)
+    setInterval(function () {
+      fetch('http://localhost:3003/privmsg/'+sessionStorage.getItem("username")+'/'+this.props.match.params.id2).then(function (response) {
+      return response.json();
+    }).then(function (result) {
+        this.setState({
+          data2: result
+        });
+      }.bind(this))
+    }.bind(this), 1000)
     }
 
 msgOutput() {
-  return this.state.data.map(function (msg) { if (msg.privateSender == sessionStorage.getItem("username") && msg.receiver == this.props.match.params.id) {
+  return this.state.data.map(function (msg) {
     return <p className="p-chatt-styling" key={msg._id}>{msg.privateSender}: {msg.privateText}</p>;
-        }
+      }.bind(this)
+    )
+}
+msgOutput2() {
+  return this.state.data2.map(function (msg2) {
+    return <p className="p-chatt-styling" key={msg2._id}>{msg2.privateSender}: {msg2.privateText}</p>;
       }.bind(this)
     )
 }
@@ -166,12 +181,13 @@ msgOutput() {
     }
     return (
     <div>
-  
+
     <h4 style={pStyles}>Inloggad som {sessionStorage.getItem("username")}</h4>
     <div className="chattwrapper">
-      <h1 style={h1Styles}>Privatchatt med {this.props.match.params.id}</h1>
+      <h1 style={h1Styles}>Privatchatt med {this.props.match.params.id2}</h1>
       <div className="chattbox">
         {this.msgOutput()}
+        {this.msgOutput2()}
       </div>
       <div className="chatt-input">
         <input className="input-field" placeholder="Börja Chatta" onChange={this.onTextChange}></input>

@@ -18,7 +18,7 @@ class App extends React.Component {
         <Route exact path="/" component={Login} />
         <Route path="/gruppchatt" component={Gruppchatt} />
         <Route path="/registrering" component={Registrering} />
-        <Route path="/privatchatt/:id" component={Privatchatt} />
+        <Route path="/privatchatt/:id2/:id1" component={Privatchatt} />
         </div>
       </BrowserRouter>
     )
