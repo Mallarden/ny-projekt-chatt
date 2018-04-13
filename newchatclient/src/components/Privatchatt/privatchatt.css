@@ -74,7 +74,7 @@ body {
   height: 800px;
   margin:0 auto;
   margin-top:50px;
-	display: inline-block;
+  margin:0 auto;
 }
 .chatt-input{
   background-color: #171814;

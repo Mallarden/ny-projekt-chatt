@@ -142,7 +142,9 @@ body {
 	text-decoration: underline;
 	padding: 5px;
 	position: relative;
-	display: block;
+  display: block;
+  cursor:pointer;
+
 }
 .dropdown-content {
 	display: none;
@@ -156,5 +158,5 @@ body {
 	cursor: pointer;
 }
 .dropdown:hover .dropdown-content {
-	display:block;
+  display:block;
 }

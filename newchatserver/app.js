@@ -162,7 +162,7 @@ app.get('/api/gruppchatt', function (request, response) {
 
 
 /*--------------------------privatchatten---------------------------------*/
-app.post('/api/privatchatt', function (request, response) {
+app.post('/privmsg', function (request, response) {
   db.collection('privmessages').insert(request.body,
     function (error, result) {
       if (error) {
@@ -177,8 +177,8 @@ app.post('/api/privatchatt', function (request, response) {
 
 
 
-app.get('/api/privatchatt', function (request, response) {
-  db.collection('privmessages').find({}).toArray(function (error, result) {
+app.get('/privmsg/:user2/:user1', function (request, response) {
+  db.collection('privmessages').find({ $and: [ { "privateSender": request.params.user1 }, { "receiver": request.params.user2 } ]}).toArray(function (error, result) {
     if (error) {
       response.status(500).send(error);
       return;
