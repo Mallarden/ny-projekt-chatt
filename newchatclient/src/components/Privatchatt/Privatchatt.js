@@ -116,7 +116,8 @@ class Privatchatt extends React.Component {
     super();
     this.state = {
       inputMessage: null,
-      data: []
+      data: [],
+      data2: []
     };
     this.onTextChange = this.onTextChange.bind(this);
     this.chattMsg = this.chattMsg.bind(this);
@@ -126,7 +127,7 @@ class Privatchatt extends React.Component {
   }
 
 chattMsg() {
-      fetch('/privmsg', {
+      fetch('http://localhost:3003/privmsg', {
         body: '{ "privateSender": "' + sessionStorage.getItem("username") + '", "receiver": "' + this.props.match.params.id + '", "privateText": "' + this.state.inputMessage + '" }',
         headers: {
           'Content-Type': 'application/json'
@@ -141,11 +142,18 @@ chattMsg() {
 //-----------------------------------------------------------------------------
     componentDidMount() {
     setInterval(function () {
-      fetch('/privmsg/:user1/:user2').then(function (response) {
+      fetch('http://localhost:3003/privmsg/'+this.props.match.params.id+'/'+sessionStorage.getItem("username")).then(function (response) {
       return response.json();
     }).then(function (result) {
         this.setState({
           data: result
+        });
+      }.bind(this))
+      fetch('http://localhost:3003/privmsg/'+sessionStorage.getItem("username")+'/'+this.props.match.params.id).then(function (response) {
+      return response.json();
+    }).then(function (result) {
+        this.setState({
+          data2: result
         });
       }.bind(this))
     }.bind(this), 1000)
@@ -154,6 +162,12 @@ chattMsg() {
 msgOutput() {
   return this.state.data.map(function (msg) {
     return <p className="p-chatt-styling" key={msg._id}>{msg.privateSender}: {msg.privateText}</p>;
+      }.bind(this)
+    )
+}
+msgOutput2() {
+  return this.state.data2.map(function (msg2) {
+    return <p className="p-chatt-styling" key={msg2._id}>{msg2.privateSender}: {msg2.privateText}</p>;
       }.bind(this)
     )
 }
@@ -175,6 +189,7 @@ msgOutput() {
       <h1 style={h1Styles}>Privatchatt med {this.props.match.params.id}</h1>
       <div className="chattbox">
         {this.msgOutput()}
+        {this.msgOutput2()}
       </div>
       <div className="chatt-input">
         <input className="input-field" placeholder="Börja Chatta" onChange={this.onTextChange}></input>

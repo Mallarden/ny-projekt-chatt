@@ -36,7 +36,7 @@ class ChattMsg extends React.Component {
         console.log(result);
       });
     }
-    
+
     render() { console.log(sessionStorage.getItem("username"));
       return <div className="chatt-input">
         <input className="input-field" ref="input" placeholder="Börja Chatta" onKeyPress={this.handleChange.bind(this)} onChange={this.onTextChange}></input>
@@ -45,7 +45,7 @@ class ChattMsg extends React.Component {
         </div>
     }
   };
- 
+
 
   // komponent för att hämta databas collection "users" och sedan skriva ut det i chattbox diven.
   class MsgOutput extends React.Component {
@@ -104,7 +104,7 @@ class ChattMsg extends React.Component {
         return this.state.usersData.map(function (user) {
                     return <div className="dropdown">
                       <li key={user._id}>{user.userName}</li>
-                      <div className="dropdown-content"><Link to={"/privatchatt/"+user.userName} target="_blank"><p>Starta privatchatt med {user.userName}</p></Link></div>
+                      <div className="dropdown-content"><Link to={"/privatchatt/"+user.userName+"/"+sessionStorage.getItem("username")} target="_blank"><p>Starta privatchatt med {user.userName}</p></Link></div>
                     </div>;
                   }
                 )
@@ -158,6 +158,6 @@ class Gruppchatt extends React.Component {
   }
 }
 
- 
+
 
 export default Gruppchatt;
