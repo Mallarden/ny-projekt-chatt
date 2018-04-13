@@ -127,8 +127,9 @@ class Privatchatt extends React.Component {
   }
 
 chattMsg() {
-      fetch('http://localhost:3003/privmsg/', {
-        body: '{ "privateSender": "' + sessionStorage.getItem("username") + '", "receiver": "' + this.props.match.params.id2 + '", "privateText": "' + this.state.inputMessage + '" }',
+
+      fetch('http://localhost:3003/privmsg', {
+        body: '{ "privateSender": "' + sessionStorage.getItem("username") + '", "receiver": "' + this.props.match.params.id + '", "privateText": "' + this.state.inputMessage + '" }',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -142,11 +143,19 @@ chattMsg() {
 //-----------------------------------------------------------------------------
     componentDidMount() {
     setInterval(function () {
-      fetch('http://localhost:3003/privmsg/'+this.props.match.params.id2+'/'+sessionStorage.getItem("username")).then(function (response) {
+
+      fetch('http://localhost:3003/privmsg/'+this.props.match.params.id+'/'+sessionStorage.getItem("username")).then(function (response) {
       return response.json();
     }).then(function (result) {
         this.setState({
           data: result
+        });
+      }.bind(this))
+      fetch('http://localhost:3003/privmsg/'+sessionStorage.getItem("username")+'/'+this.props.match.params.id).then(function (response) {
+      return response.json();
+    }).then(function (result) {
+        this.setState({
+          data2: result
         });
       }.bind(this))
     }.bind(this), 1000)

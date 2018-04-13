@@ -44,7 +44,7 @@ class ChattMsg extends React.Component {
         </div>
     }
   };
- 
+
 
 
   // komponent för att hämta databas collection "users" och sedan skriva ut det i chattbox diven.
@@ -157,6 +157,5 @@ class Gruppchatt extends React.Component {
      </div>
   }
 }
-
 
 export default Gruppchatt;
