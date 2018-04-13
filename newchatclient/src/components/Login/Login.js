@@ -68,7 +68,7 @@ class Login extends React.Component {
               <input name="username" id="username" type="text" onChange={input => this.setState({ username: input.target.value })} />
               </label>
               <label>Password :
-              <input name="password" id="password" type="text" onChange={input => this.setState({ password: input.target.value })}  />
+              <input name="password" id="password" type="password" onChange={input => this.setState({ password: input.target.value })}  />
               </label>
               <button type="submit" value="Submit" id="submit">Go!</button>
               <p className="inlogg-p">Inget konto? Klicka </p>

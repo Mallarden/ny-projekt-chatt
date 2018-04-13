@@ -9,7 +9,6 @@ class UsersList extends React.Component {
     this.state = {
       usersData: []
     };
-
   }
 
   componentDidMount() {
@@ -42,11 +41,8 @@ var pStyles = {
   fontFamily: 'Raleway',
   paddingBottom: 0.3 + 'em'
 };
-window.setInterval(function() {
-        var elem = document.getElementsByClassName('chattbox');
-          console.log(elem);
-        elem[0].scrollTop = elem[0].scrollHeight;
-      }, 500);
+
+
 class Privatchatt extends React.Component {
   constructor(props) {
     super();
@@ -56,6 +52,12 @@ class Privatchatt extends React.Component {
     };
     this.onTextChange = this.onTextChange.bind(this);
     this.chattMsg = this.chattMsg.bind(this);
+
+    window.setInterval(function() {
+            var elem = document.getElementsByClassName('chattbox');
+              console.log(elem);
+            elem[0].scrollTop = elem[0].scrollHeight;
+          }, 500);
   }
   onTextChange(event) {
     this.setState({ inputMessage: event.target.value });

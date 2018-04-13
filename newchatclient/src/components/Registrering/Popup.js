@@ -12,15 +12,15 @@ class Popup extends React.Component {
       this.handlePassword = this.handlePassword.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
-  
+
    handleUsername(event) {
        this.setState({value: event.target.value});
    }
-  
+
      handlePassword(event) {
        this.setState({value1: event.target.value});
      }
-  
+
     handleSubmit(event) {
       event.preventDefault();
       fetch('http://localhost:3003/api/register', {
@@ -37,7 +37,7 @@ class Popup extends React.Component {
             alert('Registrering slutförd');
           };
           return response.json();
-        }.bind(this));    
+        }.bind(this));
     }
       render() {
         return (
@@ -50,14 +50,14 @@ class Popup extends React.Component {
                 <input name="username" id="reg-username" type="text" value={this.state.value} onChange={this.handleUsername}   />
                 </label>
                 <label>Password :
-                <input name="password" id="reg-password" type="text" value={this.state.value1} onChange={this.handlePassword}   />
+                <input name="password" id="reg-password" type="password" value={this.state.value1} onChange={this.handlePassword}   />
                 </label>
                 <button type="button" id="register-button" type="submit" value="Submit" id="submit">Register</button>
                 </div>
                 </form>
               <h1>{this.props.text}</h1>
             </div>
-          </div>        
+          </div>
         );
       }
     }

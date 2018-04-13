@@ -38,6 +38,7 @@ div.container {
 }
 
 input[type=text],
+input[type=password],
 input[type=email] {
     width: 95%;
     height: 40px;
