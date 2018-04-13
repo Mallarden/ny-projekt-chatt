@@ -108,24 +108,6 @@ class ChattMsg extends React.Component {
             }
 
 
-
-  /* var Sidebar = createReactClass({
-    render: function(){
-      return <div className="container">
-              <h1>Friends</h1>
-              <div className="friendslist">
-                  <ul>
-                      <li>Test1</li>
-                      <li>Test2</li>
-                      <li>Test3</li>
-                      <li>Test4</li>
-                  </ul>
-              </div>
-        </div>
-    }
-  });
-  */
-
   var pStyles = {
     color: 'white',
     fontSize: 0.8 + 'em',
