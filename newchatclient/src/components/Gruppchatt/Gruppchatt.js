@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -129,7 +128,6 @@ class ChattMsg extends React.Component {
         </div>
     }
   });
-
   */
 
   var pStyles = {
