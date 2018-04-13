@@ -81,11 +81,7 @@ class ChattMsg extends React.Component {
       this.state = {
         usersData: []
       };
-      window.setInterval(function() {
-        var elem = document.getElementsByClassName('chattbox');
-          console.log(elem);
-        elem[0].scrollTop = elem[0].scrollHeight;
-      }, 500);
+    
     }
 
     componentDidMount() {
