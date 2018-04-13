@@ -9,6 +9,7 @@ class UsersList extends React.Component {
     this.state = {
       usersData: []
     };
+
   }
 
   componentDidMount() {
@@ -41,6 +42,11 @@ var pStyles = {
   fontFamily: 'Raleway',
   paddingBottom: 0.3 + 'em'
 };
+window.setInterval(function() {
+        var elem = document.getElementsByClassName('chattbox');
+          console.log(elem);
+        elem[0].scrollTop = elem[0].scrollHeight;
+      }, 500);
 class Privatchatt extends React.Component {
   constructor(props) {
     super();
@@ -54,6 +60,12 @@ class Privatchatt extends React.Component {
   onTextChange(event) {
     this.setState({ inputMessage: event.target.value });
   }
+
+handleChange(e) {
+  if (e.key == 'Enter') {
+     this.chattMsg();
+  }
+};
 
 chattMsg() {
       fetch('http://localhost:3003/privmsg', {
@@ -103,7 +115,7 @@ msgOutput() {
         {this.msgOutput()}
       </div>
       <div className="chatt-input">
-        <input className="input-field" placeholder="Börja Chatta" onChange={this.onTextChange}></input>
+        <input className="input-field" placeholder="Börja Chatta" onKeyPress={this.handleChange.bind(this)} onChange={this.onTextChange}></input>
         <button className="send-btn" onClick={this.chattMsg}>Send</button>
       </div>
     </div>

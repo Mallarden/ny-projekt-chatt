@@ -40,7 +40,7 @@ class ChattMsg extends React.Component {
     render() { console.log(sessionStorage.getItem("username"));
       return <div className="chatt-input">
         <input className="input-field" ref="input" placeholder="Börja Chatta" onKeyPress={this.handleChange.bind(this)} onChange={this.onTextChange}></input>
-        <button className="send-btn" onClick={this.chattFunc}>Send</button>
+        <button className="send-btn" onClick={this.chattFunc.bind(this)}>Send</button>
         </div>
     }
   };
@@ -81,7 +81,11 @@ class ChattMsg extends React.Component {
       this.state = {
         usersData: []
       };
-    
+      window.setInterval(function() {
+        var elem = document.getElementsByClassName('chattbox');
+          console.log(elem);
+        elem[0].scrollTop = elem[0].scrollHeight;
+      }, 500);
     }
 
     componentDidMount() {
