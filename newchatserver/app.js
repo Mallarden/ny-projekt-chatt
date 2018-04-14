@@ -154,7 +154,10 @@ app.post('/privmsg', function (request, response) {
 
 
 app.get('/privmsg/:user2/:user1', function (request, response) {
-  db.collection('privmessages').find({ $or: [ { "privateSender": request.params.user1 }, { "receiver": request.params.user2 }, { "privateSender": request.params.user2 }, { "receiver": request.params.user1 }  ]}).toArray(function (error, result) {
+  db.collection('privmessages').find({ $or: [
+    {$and: [ { "privateSender": request.params.user1 }, { "receiver": request.params.user2 }] },
+    {$and: [ { "privateSender": request.params.user2 }, { "receiver": request.params.user1 }] }
+  ]}).toArray(function (error, result) {
     if (error) {
       response.status(500).send(error);
       return;
