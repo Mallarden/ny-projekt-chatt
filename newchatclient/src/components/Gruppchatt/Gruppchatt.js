@@ -35,6 +35,7 @@ class ChattMsg extends React.Component {
       }).then(function (result) {
         console.log(result);
       });
+      document.getElementsByClassName('input-field')[0].value = '';
     }
 
     render() { console.log(sessionStorage.getItem("username"));
@@ -56,6 +57,13 @@ class ChattMsg extends React.Component {
       };
     }
 
+
+    bottomScroll() {
+        var elem = document.getElementsByClassName('chattbox');
+        elem[0].scrollTop = elem[0].scrollHeight;
+    }
+
+
   componentDidMount() {
   setInterval(function () {
     fetch('http://localhost:3003/api/gruppchatt').then(function (response) {
@@ -65,7 +73,8 @@ class ChattMsg extends React.Component {
         data: result
       });
     }.bind(this))
-  }.bind(this), 1000)
+    this.bottomScroll();
+  }.bind(this), 500)
   }
 
   render() {
@@ -81,11 +90,6 @@ class ChattMsg extends React.Component {
       this.state = {
         usersData: []
       };
-      window.setInterval(function() {
-        var elem = document.getElementsByClassName('chattbox');
-          console.log(elem);
-        elem[0].scrollTop = elem[0].scrollHeight;
-      }, 500);
     }
 
     componentDidMount() {
@@ -121,7 +125,7 @@ class ChattMsg extends React.Component {
 class Gruppchatt extends React.Component {
   render() {
     if (sessionStorage.getItem("username") === null) {
-      return <Redirect to="/" />
+      return <Redirect to="/inlogg" />
     }
     return <div>
     <div className="user-list-wrapper">

@@ -53,14 +53,15 @@ class Privatchatt extends React.Component {
     this.onTextChange = this.onTextChange.bind(this);
     this.chattMsg = this.chattMsg.bind(this);
 
-    window.setInterval(function() {
-            var elem = document.getElementsByClassName('chattbox');
-              console.log(elem);
-            elem[0].scrollTop = elem[0].scrollHeight;
-          }, 500);
+
   }
   onTextChange(event) {
     this.setState({ inputMessage: event.target.value });
+  }
+
+  bottomScroll() {
+            var elem = document.getElementsByClassName('chattbox');
+            elem[0].scrollTop = elem[0].scrollHeight;
   }
 
 handleChange(e) {
@@ -81,6 +82,7 @@ chattMsg() {
       }).then(function (result) {
         console.log(result);
       });
+      document.getElementsByClassName('input-field')[0].value = '';
     }
 //-----------------------------------------------------------------------------
     componentDidMount() {
@@ -92,7 +94,8 @@ chattMsg() {
           data: result
         });
       }.bind(this))
-    }.bind(this), 1000)
+      this.bottomScroll();
+    }.bind(this), 500)
     }
 
 msgOutput() {
@@ -105,7 +108,7 @@ msgOutput() {
 
   render() {
     if (sessionStorage.getItem("username") === null) {
-      return <Redirect to="/" />
+      return <Redirect to="/inlogg" />
     }
     return (
     <div>
